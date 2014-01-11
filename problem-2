@@ -6,24 +6,19 @@
 
  # pos_prime = possible primes
  # divisor = possible divisors
- # prime_loc = the number of the prime
- # loot = the prime number itself
- 
 
 primes = [2,3]
 pos_prime = 5
 
 while primes.length < 10001
-   for divisor in (2..(pos_prime/2))
-        if pos_prime % divisor == 0
-            break
-        else
-            if (divisor + 1) > (pos_prime / 2)
-                primes.push(pos_prime)
-            end
-        end
-   end
-   pos_prime += 2
+  for divisor in (2..(pos_prime/2))
+    if pos_prime % divisor == 0
+      break
+    elsif (divisor + 1) > (pos_prime / 2)
+      primes.push(pos_prime)
+    end
+  end
+  pos_prime += 2
 end
 
 puts "These is the 10,001st prime: #{primes[-1]}" 
