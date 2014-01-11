@@ -1,0 +1,56 @@
+# The prime factors of 13195 are 5, 7, 13 and 29.
+
+# What is the largest prime factor
+# of the number 6008l51475143 ?
+
+primes = [2,3]
+prime_factors = []
+num = 100
+
+# # for 
+# # prime_factors.push()
+
+# def build_primes(primes,num)
+#     pos_prime = 5
+#     while primes[-1] <= (num / 2)
+#         for divisor in (2..(pos_prime/2))
+#             if pos_prime % divisor == 0
+#                 break
+#             elsif (divisor + 1) > (pos_prime / 2)
+#                 primes.push(pos_prime)
+#             end
+#       end
+#       pos_prime += 2
+#     end
+# end
+# build_primes(primes,num)
+
+
+
+# puts "Potential primes are #{primes.inspect}"
+
+n=0
+dynum = num
+
+def next_prime()
+    
+end
+
+
+for n in (0..50)
+    if num % next_prime(n) == 0
+        prime_factors.push(next_prime(n))
+        dynum = num/next_prime(n
+    elsif num == prime_factors.inject(:*)}
+        break
+    end
+end
+
+prime_factors.each_with_index { |n,i|
+    if i == 0
+        print "The prime factorization of #{num} are #{n} x "
+    elsif i == prime_factors.length - 1
+        puts "#{n}."
+    else
+        print "#{n} x "
+}
