@@ -26,4 +26,4 @@ while primes.length <= 10
    pos_prime += 2
 end
 
-puts "These is the 10,001st prime: #{primes[-1]}"
+puts "These is the 10,001st prime: #{primes[-1]}" 
