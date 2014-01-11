@@ -6,24 +6,26 @@
 
 primes = [2,3,5]
 factors = []
-num = 600851
+num = 100
 dynum = num
 
-def next_prime(new_prime)
+def next_prime(pos_prime)
     divisor = 3
-    while divisor <= (new_prime / 2) + 1
-        if new_prime == divisor
-            return new_prime
-        elsif (divisor + 1) > (new_prime / 2)
+    new_prime = pos_prime
+    while divisor < new_prime
+        if (divisor + 1) > (new_prime / 2)
             return new_prime
         elsif new_prime % divisor == 0
             new_prime += 2
+            divisor = 3
+            redo
+        else
+            divisor += 2
         end
-        divisor += 2
     end
 end
 
-for n in (0..100)
+for n in (0..1000)
     if primes[n] == dynum
         factors.push(primes[n])
         break
