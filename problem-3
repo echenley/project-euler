@@ -1,56 +1,39 @@
-# The prime factors of 13195 are 5, 7, 13 and 29.
+# By listing the first six prime numbers:
+# 2, 3, 5, 7, 11, and 13,
+# we can see that the 6th prime is 13.
 
-# What is the largest prime factor
-# of the number 6008l51475143 ?
+# What is the 10 001st prime number?
+
+ # pos_prime = possible primes
+ # divisor = possible divisors
 
 primes = [2,3]
-prime_factors = []
-num = 100
-
-# # for 
-# # prime_factors.push()
-
-# def build_primes(primes,num)
-#     pos_prime = 5
-#     while primes[-1] <= (num / 2)
-#         for divisor in (2..(pos_prime/2))
-#             if pos_prime % divisor == 0
-#                 break
-#             elsif (divisor + 1) > (pos_prime / 2)
-#                 primes.push(pos_prime)
-#             end
-#       end
-#       pos_prime += 2
-#     end
-# end
-# build_primes(primes,num)
-
-
-
-# puts "Potential primes are #{primes.inspect}"
-
-n=0
+factors = []
+num = 15
 dynum = num
 
-def next_prime()
-    
-end
-
-
-for n in (0..50)
-    if num % next_prime(n) == 0
-        prime_factors.push(next_prime(n))
-        dynum = num/next_prime(n
-    elsif num == prime_factors.inject(:*)}
-        break
+def next_prime(pos_prime)
+    for divisor in (3..(pos_prime / 2)).step(2)
+        if pos_prime % divisor == 0
+            next_prime(pos_prime+2)
+        elsif (divisor + 1) > (pos_prime / 2)
+            return pos_prime
+        end
     end
 end
 
-prime_factors.each_with_index { |n,i|
-    if i == 0
-        print "The prime factorization of #{num} are #{n} x "
-    elsif i == prime_factors.length - 1
-        puts "#{n}."
-    else
-        print "#{n} x "
-}
+for n in (0..primes.length)
+    if primes[n] == dynum
+        factors.push(primes[n])
+        break
+    elsif dynum % primes[n] == 0
+        factors.push(primes[n])
+        dynum /= primes[n]
+        redo
+    elsif n == primes.length - 1
+        primes.push(next_prime(primes[n]))
+    end
+end
+
+puts "This is your prime set: #{primes.inspect}"
+puts "The prime factors of #{num} are #{factors.inspect}"
