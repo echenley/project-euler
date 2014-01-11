@@ -8,32 +8,17 @@
  # divisor = possible divisors
 
 primes = [2,3]
-factors = []
-num = 10
-dynum = num
+pos_prime = 5
 
-def next_prime(pos_prime)
-  for divisor in (3..(pos_prime/2)).step(2)
+while primes.length < 10001
+  for divisor in (2..(pos_prime/2))
     if pos_prime % divisor == 0
       break
     elsif (divisor + 1) > (pos_prime / 2)
-      return pos_prime
+      primes.push(pos_prime)
     end
   end
   pos_prime += 2
 end
 
-for n in (0..primes.length)
-    if primes[n] == dynum
-        factors.push(primes[n])
-        break
-    elsif dynum % primes[n] == 0
-        factors.push(primes[n])
-        dynum /= primes[n]
-    elsif n == primes.length - 1
-        primes.push(next_prime(primes[n]+2))
-    end
-end
-
-puts "This is your prime set: #{primes.inspect}"
-puts "The prime factors of #{num} are #{factors.inspect}"
+puts "These is the 10,001st prime: #{primes[-1]}" 
