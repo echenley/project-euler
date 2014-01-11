@@ -10,10 +10,10 @@
  # loot = the prime number itself
  
 
-primes = [1,2,3]
+primes = [2,3]
 pos_prime = 5
 
-while primes.length <= 10
+while primes.length < 10001
    for divisor in (2..(pos_prime/2))
         if pos_prime % divisor == 0
             break
