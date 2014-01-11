@@ -1,0 +1,29 @@
+# By listing the first six prime numbers:
+# 2, 3, 5, 7, 11, and 13,
+# we can see that the 6th prime is 13.
+
+# What is the 10 001st prime number?
+
+ # pos_prime = possible primes
+ # divisor = possible divisors
+ # prime_loc = the number of the prime
+ # loot = the prime number itself
+ 
+
+primes = [1,2,3]
+pos_prime = 5
+
+while primes.length <= 10
+   for divisor in (2..(pos_prime/2))
+        if pos_prime % divisor == 0
+            break
+        else
+            if (divisor + 1) > (pos_prime / 2)
+                primes.push(pos_prime)
+            end
+        end
+   end
+   pos_prime += 2
+end
+
+puts "These is the 10,001st prime: #{primes[-1]}"
