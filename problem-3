@@ -6,12 +6,11 @@
 
 primes = [2,3,5]
 factors = []
-num = 100
+num = 600851475143
 dynum = num
 
-def next_prime(pos_prime)
+def next_prime(new_prime)
     divisor = 3
-    new_prime = pos_prime
     while divisor < new_prime
         if (divisor + 1) > (new_prime / 2)
             return new_prime
