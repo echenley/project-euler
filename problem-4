@@ -9,11 +9,7 @@ largest_pal = [0,0,0]
 
 def check_pal?(num)
     num = num.to_s.split('')
-    if num[0] == num[-1] && num[1] == num[-2] && num[2] == num[-3]
-        return true
-    else
-        return false
-    end
+    num[0] == num[-1] && num[1] == num[-2] && num[2] == num[-3] ? true : false
 end
 
 result = catch(:done) do
