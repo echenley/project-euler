@@ -5,8 +5,7 @@
 # Find the largest palindrome made from the
 # product of two 3-digit numbers.
 
-largest_pal = 100001
-limit = 100
+largest_pal = [0,0,0]
 
 def check_pal?(num)
     num = num.to_s.split('')
@@ -17,18 +16,16 @@ def check_pal?(num)
     end
 end
 
-catch (:done) do
-    for x in 0..limit
+result = catch(:done) do
+    for x in 0..899
         for y in 0..x
             num = (999-x)*(999-y)
-            if check_pal?(num) == true && num > largest_pal
-                largest_pal = num
-                dig1 = x
-                dig2 = y
-                throw :done if x == limit
+            if check_pal?(num) == true && num > largest_pal[0]
+                largest_pal = [num,(999-x),(999-y)]
             end
+            throw :done, largest_pal if (999-x)*(999) < largest_pal[0]
         end
     end
-    puts "#{999-dig1} x #{999-dig2} = #{largest_pal} is the largest palindrome made from the product of two 3-digit numbers, bitches."
 end
 
+puts "#{largest_pal[1]} x #{largest_pal[2]} = #{largest_pal[0]} is the largest palindrome made from the product of two 3-digit numbers, bitches."
