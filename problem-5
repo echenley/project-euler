@@ -6,7 +6,7 @@
 # that is evenly divisible by all
 # of the numbers from 1 to 20?
 
-numbers = *(1..20)                  # handles any array of numbers
+numbers = *(1..20)          # handles any array of numbers
 numbers.sort!
 x = numbers.length - 2
 lcm = numbers[-1]
