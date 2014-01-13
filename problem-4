@@ -6,22 +6,26 @@
 # product of two 3-digit numbers.
 
 largest_pal = [0,0,0]
-limit = 30
+limit = 999
+x = limit
 
 def check_pal?(num)
     rev_check = num.to_s.split('').reverse.join('')
     num.to_s == rev_check ? true : false
 end
 
-result = catch(:done) do
-    for x in 0..limit
-        for y in 0..x
-            num = (limit-x)*(limit-y)
+catch(:done) do
+    while x > 0 do
+        y = limit
+        while y >= x do
+            num = x*y
             if check_pal?(num) && num > largest_pal[0]
-                largest_pal = [num,(limit-x),(limit-y)]
+                largest_pal = [num,x,y]
                 puts "#{largest_pal[1]} x #{largest_pal[2]} = #{largest_pal[0]}"
             end
-            throw :done, largest_pal if (limit-x)*(limit-1) < largest_pal[0]
+            throw :done, largest_pal if x*limit < largest_pal[0]
+            y -= 1
         end
+        x -= 1
     end
 end
