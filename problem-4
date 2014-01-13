@@ -6,22 +6,22 @@
 # product of two 3-digit numbers.
 
 largest_pal = [0,0,0]
+limit = 30
 
 def check_pal?(num)
-    num = num.to_s.split('')
-    num[0] == num[-1] && num[1] == num[-2] && num[2] == num[-3] ? true : false
+    rev_check = num.to_s.split('').reverse.join('')
+    num.to_s == rev_check ? true : false
 end
 
 result = catch(:done) do
-    for x in 0..899
+    for x in 0..limit
         for y in 0..x
-            num = (999-x)*(999-y)
-            if check_pal?(num) == true && num > largest_pal[0]
-                largest_pal = [num,(999-x),(999-y)]
+            num = (limit-x)*(limit-y)
+            if check_pal?(num) && num > largest_pal[0]
+                largest_pal = [num,(limit-x),(limit-y)]
+                puts "#{largest_pal[1]} x #{largest_pal[2]} = #{largest_pal[0]}"
             end
-            throw :done, largest_pal if (999-x)*(999) < largest_pal[0]
+            throw :done, largest_pal if (limit-x)*(limit-1) < largest_pal[0]
         end
     end
 end
-
-puts "#{largest_pal[1]} x #{largest_pal[2]} = #{largest_pal[0]} is the largest palindrome made from the product of two 3-digit numbers, bitches."
