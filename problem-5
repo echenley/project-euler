@@ -21,7 +21,7 @@ def gcd(a,b)
 end
 
 while x >= 0
-    lcm_tmp = (lcm_tmp * numbers[x]) / gcd(lcm_tmp, numbers[x])
+    lcm = (lcm * numbers[x]) / gcd(lcm, numbers[x])
     x -= 1
 end
-puts "lcm(#{numbers.join(',')}) = #{lcm_tmp}"
+puts "lcm(#{numbers.join(',')}) = #{lcm}"
