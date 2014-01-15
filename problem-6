@@ -12,7 +12,7 @@
 # Find the difference between the sum of the squares of the first
 # one hundred natural numbers and the square of the sum.
 
-numbers = *(1..10)
+numbers = *(1..100)
 
 def sum_squares(numbers)
   squares = []
@@ -24,7 +24,7 @@ end
 
 def square_sums(numbers)
   sum = 0
-  numbers.inject(:+)
+  numbers = numbers.inject(:+)
   numbers **= 2
 end
 
