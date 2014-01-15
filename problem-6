@@ -12,23 +12,9 @@
 # Find the difference between the sum of the squares of the first
 # one hundred natural numbers and the square of the sum.
 
-numbers = *(1..100)
+limit = 100
 
-def sum_squares(numbers)
-  squares = []
-  numbers.each { |x|
-    squares.push(x **= 2)
-  }
-  squares.inject(:+)
-end
-
-def square_sums(numbers)
-  sum = 0
-  numbers = numbers.inject(:+)
-  numbers **= 2
-end
-
-x = sum_squares(numbers)
-y = square_sums(numbers)
-diff = y - x
-puts "#{y} - #{x} = #{diff}"
+sum_sq = (limit * (limit + 1) * (2 * number + 1) ) / 6    # formula for sum of consecutive squares
+sq_sum = ( ( limit * (limit + 1) ) / 2 ) ** 2             # formula for square of sum of consecutive integers
+diff = sq_sum - sum_sq
+puts "#{sq_sum} - #{sum_sq} = #{diff}"
