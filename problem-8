@@ -7,7 +7,7 @@ answer = 0
 x = 0
 
 while x <= num.length - 5
-  product = num[x] * num[x+1] * num[x+2] * num[x+3] * num[x+4]      # there's gotta be a better way
+  product = num[x..x+4].inject(:*)
   answer = product if product > answer
   x += 1
 end
