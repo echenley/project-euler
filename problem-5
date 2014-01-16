@@ -13,11 +13,7 @@ lcm = numbers[-1]
 
 def gcd(a,b)
     remainder = a % b
-    if remainder == 0
-        return b
-    else
-        gcd(b,remainder)
-    end
+    remainder == 0 ? return b : gcd(b,remainder)
 end
 
 while x >= 0
