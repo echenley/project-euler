@@ -12,8 +12,7 @@ x = numbers.length - 2
 lcm = numbers[-1]
 
 def gcd(a,b)
-    remainder = a % b
-    remainder == 0 ? return b : gcd(b,remainder)
+    a % b == 0 ? return b : gcd(b,remainder)
 end
 
 while x >= 0
