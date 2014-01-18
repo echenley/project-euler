@@ -44,4 +44,5 @@ def check(sum)
 end
 
 a,b,c = check(1000)
-puts "#{a}^2 + #{b}^2 = #{c}^2"
+product = a * b * c
+puts "#{a} * #{b} * #{c} = #{product}"
