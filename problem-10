@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+# The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+# Find the sum of all the primes below two million.
+
+# pos_prime = possible primes
+# divisor = possible divisors
+
+primes = [2,3]
+pos_prime = 5
+upto = 2000000
+
+while pos_prime < upto
+  limit = Math.sqrt(pos_prime).floor
+  pos_prime % 2 == 0 ? pos_prime += 1 : divisor = 3
+  primes.push(pos_prime) if divisor > limit
+  while divisor <= limit
+    if pos_prime % divisor == 0
+      break
+    elsif (divisor + 2) > limit
+      primes.push(pos_prime)
+    end
+    divisor += 2
+  end
+  pos_prime += 2
+end
+
+puts "This is the biggest prime under #{upto}: #{primes[-1]}"
+puts "The sum of all primes up to #{upto} is: #{primes.inject(:+)}"
