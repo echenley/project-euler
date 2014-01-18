@@ -1,64 +1,48 @@
 # A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
-
-# a^2 + b^2 = c^2
-
-# For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
-
-# There exists exactly one Pythagorean triplet for which a + b + c = 1000.
-# Find the product abc.
-
-def check(sum)
-  a = 1
-  b = 1
-  while a < (sum - 1)
-    while b < (sum - a)
-      c = sum - a - b
-      break if a ** 2 + b ** 2 > c ** 2 || a >= c || b >= c
-      return a,b,c if a ** 2 + b ** 2 == c ** 2
-      b += 1
-    end
-    b = 1
-    a += 1
-  end
-end
-
-a,b,c = check(1000)
-puts "#{a}^2 + #{b}^2 = #{c}^2"
-
-# A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
 # a^2 + b^2 = c^2
 # For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
 # There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 # Find the product abc.
 
-def bounce_up(a,b,c,sum)
-    add = ((c - b)/4).floor
+def bounce_up(a,b,c,sum,upper,lower)
+    add = ((upper - b) / 2).ceil
     b += add
     c = sum - a - b
-    return b,c
+    done = true if upper - lower <= 2 || b >= upper
+    return b,c,done
 end
 
-def bounce_down(a,b,sum)
-    sub = ((b - a)/2).floor
+def bounce_down(a,b,sum,upper,lower)
+    sub = ((b - lower)/2).ceil
     b -= sub
     c = sum - a - b
-    return b,c
+    done = true if upper - lower <= 2 || b <= lower
+    return b,c,done
 end
 
 def check(sum)
     a = 1
     left = sum - a
-    left % 2 == 0 ? b = (left / 2).floor - 1 : b = (left / 2).floor
+    left % 2 == 0 ? b = (left / 2) - 1 : b = (left / 2).floor
+    upper = sum - 2
+    lower = 1
     c = sum - a - b
     while a < sum - 2
+        done = false
         while a ** 2 + b ** 2 != c ** 2
-            a ** 2 + b ** 2 > c ** 2 ? b,c = bounce_down(a,b,sum) : b,c = bounce_up(a,b,c,sum)
-            c = sum - a - b
+            if a ** 2 + b ** 2 > c ** 2
+                upper = b
+                b,c,done = bounce_down(a,b,sum,upper,lower)
+            else
+                lower = b
+                b,c,done = bounce_up(a,b,c,sum,upper,lower)
+            end
+            break if done == true
         end
     return a,b,c if a ** 2 + b ** 2 == c ** 2
     a += 1
     end
 end
 
-a,b,c = check(70)                   # looking for [a,b,c] = [20,21,29]
+a,b,c = check(1000)
 puts "#{a}^2 + #{b}^2 = #{c}^2"
