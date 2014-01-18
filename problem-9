@@ -24,10 +24,10 @@ def check(sum)
     a = 1
     left = sum - a
     left % 2 == 0 ? b = (left / 2) - 1 : b = (left / 2).floor
-    upper = sum - 2
-    lower = 1
     c = sum - a - b
     while a < sum - 2
+        lower = a
+        upper = b
         done = false
         while a ** 2 + b ** 2 != c ** 2
             if a ** 2 + b ** 2 > c ** 2
@@ -37,6 +37,7 @@ def check(sum)
                 lower = b
                 b,c,done = bounce_up(a,b,c,sum,upper,lower)
             end
+            puts "#{a},#{b},#{c}"
             break if done == true
         end
     return a,b,c if a ** 2 + b ** 2 == c ** 2
@@ -44,5 +45,5 @@ def check(sum)
     end
 end
 
-a,b,c = check(1000)
+a,b,c = check(198)
 puts "#{a}^2 + #{b}^2 = #{c}^2"
