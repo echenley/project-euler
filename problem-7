@@ -9,14 +9,19 @@
 
 primes = [2,3]
 pos_prime = 5
+upto = 10001
 
-while primes.length < 10001
-  for divisor in (2..(pos_prime/2))
+while primes.length < upto
+  limit = Math.sqrt(pos_prime).floor
+  pos_prime % 2 == 0 ? pos_prime += 1 : divisor = 3
+  primes.push(pos_prime) if divisor > limit
+  while divisor <= limit
     if pos_prime % divisor == 0
       break
-    elsif (divisor + 1) > (pos_prime / 2)
+    elsif (divisor + 2) > limit
       primes.push(pos_prime)
     end
+    divisor += 2
   end
   pos_prime += 2
 end
