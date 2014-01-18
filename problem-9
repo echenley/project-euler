@@ -45,5 +45,5 @@ def check(sum)
     end
 end
 
-a,b,c = check(198)
+a,b,c = check(1000)
 puts "#{a}^2 + #{b}^2 = #{c}^2"
