@@ -27,10 +27,11 @@ grid = [[8,2,22,97,38,15,0,4,0,75,4,5,07,78,52,12,50,77,91,8],[49,49,99,40,17,81
 
 
 def horizontal(grid,answer)
-    x,y = 0,0
+    y = 0
     while y <= 19
+        x = 0
         while x <= 16
-            product = grid[y][x..x+3].inject(:*)
+            product = grid[y][x] * grid[y][x+1]  * grid[y][x+2]  * grid[y][x+3]
             answer = product if product > answer
             x += 1
         end
@@ -40,8 +41,9 @@ def horizontal(grid,answer)
 end
 
 def vertical(grid,answer)
-    x,y = 0,0
+    x = 0
     while x <= 19
+        y = 0
         while y <= 16
             product = grid[y][x] * grid[y+1][x] * grid[y+2][x] * grid[y+3][x]
             answer = product if product > answer
@@ -53,22 +55,26 @@ def vertical(grid,answer)
 end
 
 def diag_up(grid,answer)
-    x,y = 3,0
-    while x <= 19
-        while y <= 16
-            product = grid[y][x] * grid[y-1][x-1] * grid[y-2][x-2] * grid[y-3][x-3]
-            y += 1
+    y = 0
+    while y <= 16
+        x = 3
+        while x <= 19
+            product = grid[y][x] * grid[y+1][x-1] * grid[y+2][x-2] * grid[y+3][x-3]
+            answer = product if product > answer
+            x += 1
         end
-        x += 1
+        y += 1
     end
     answer
 end
 
 def diag_down(grid,answer)
-    x,y = 0,0
+    x = 0
     while x <= 16
+        y = 0
         while y <= 16
             product = grid[y][x] * grid[y+1][x+1] * grid[y+2][x+2] * grid[y+3][x+3]
+            answer = product if product > answer
             y += 1
         end
         x += 1
