@@ -10,11 +10,8 @@ def next_prime(pos_prime,dynum)
         divisor = 3
         return pos_prime if divisor > limit
         while divisor <= limit
-            if pos_prime % divisor == 0
-                break
-            elsif (divisor + 2) > limit
-                return pos_prime
-            end
+            break if pos_prime % divisor == 0
+            return pos_prime if (divisor + 2) > limit
             divisor += 2
         end
         pos_prime += 2
