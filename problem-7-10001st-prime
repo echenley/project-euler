@@ -5,7 +5,7 @@ def prime_get(upto)
     pos_prime = 5
     while primes.length < upto
       limit = Math.sqrt(pos_prime).floor
-      pos_prime % 2 == 0 ? pos_prime += 1 : divisor = 3
+      divisor = 3
       primes.push(pos_prime) if divisor > limit
       while divisor <= limit
         break if pos_prime % divisor == 0
