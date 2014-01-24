@@ -3,9 +3,9 @@
 def primes_get(upto)
   primes = [2,3]
   pos_prime = 5
-  while primes.length < upto
+  while pos_prime < upto
     limit = Math.sqrt(pos_prime).floor
-    pos_prime % 2 == 0 ? pos_prime += 1 : divisor = 3
+    divisor = 3
     primes.push(pos_prime) if divisor > limit
     while divisor <= limit
       break if pos_prime % divisor == 0
@@ -14,11 +14,10 @@ def primes_get(upto)
     end
     pos_prime += 2
   end
-  return primes[-1]
+  primes.inject(:+)
 end
 
 upto = 2000000
-primes = primes_get(upto)
+sum = primes_get(upto)
 
-puts "This is the biggest prime under #{upto}: #{primes[-1]}"
-puts "The sum of all primes up to #{upto} is: #{primes.inject(:+)}"
+puts "The sum of all primes below #{upto} is: #{sum}"
