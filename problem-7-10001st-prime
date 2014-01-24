@@ -1,29 +1,21 @@
-# By listing the first six prime numbers:
-# 2, 3, 5, 7, 11, and 13,
-# we can see that the 6th prime is 13.
-
 # What is the 10 001st prime number?
 
- # pos_prime = possible primes
- # divisor = possible divisors
-
-primes = [2,3]
-pos_prime = 5
-upto = 10001
-
-while primes.length < upto
-  limit = Math.sqrt(pos_prime).floor
-  pos_prime % 2 == 0 ? pos_prime += 1 : divisor = 3
-  primes.push(pos_prime) if divisor > limit
-  while divisor <= limit
-    if pos_prime % divisor == 0
-      break
-    elsif (divisor + 2) > limit
-      primes.push(pos_prime)
+def prime_get(upto)
+    primes = [2,3]
+    pos_prime = 5
+    while primes.length < upto
+      limit = Math.sqrt(pos_prime).floor
+      pos_prime % 2 == 0 ? pos_prime += 1 : divisor = 3
+      primes.push(pos_prime) if divisor > limit
+      while divisor <= limit
+        break if pos_prime % divisor == 0
+        primes.push(pos_prime) if (divisor + 2) > limit
+        divisor += 2
+      end
+      pos_prime += 2
     end
-    divisor += 2
-  end
-  pos_prime += 2
+    return primes[-1]
 end
 
-puts "These is the 10,001st prime: #{primes[-1]}" 
+upto = 10001
+puts "These is prime \##{upto}: #{prime_get(upto)}" 
