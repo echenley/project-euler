@@ -4,37 +4,42 @@
 # What is the largest prime factor
 # of the number 600851475143 ?
 
-primes = [2,3,5]
+primes = [2,3]
 factors = []
-num = 600851475143
+num = 1001
 dynum = num
+n = 0
 
-def next_prime(new_prime)
-    divisor = 3
-    while divisor < new_prime
-        if (divisor + 1) > (new_prime / 2)
-            return new_prime
-        elsif new_prime % divisor == 0
-            new_prime += 2
-            divisor = 3
-            redo
-        else
+def next_prime(pos_prime,dynum)
+    while pos_prime <= Math.sqrt(dynum).floor 
+        limit = Math.sqrt(pos_prime).floor
+        divisor = 3
+        return pos_prime if divisor > limit
+        while divisor <= limit
+            if pos_prime % divisor == 0
+                break
+            elsif (divisor + 2) > limit
+                return pos_prime
+            end
             divisor += 2
         end
+        pos_prime += 2
     end
+    return dynum
 end
 
-for n in (0..1000)
+while primes[n] <= dynum
     if primes[n] == dynum
         factors.push(primes[n])
         break
-    elsif dynum % (primes[n]) == 0
+    elsif dynum % primes[n] == 0
         factors.push(primes[n])
         dynum /= primes[n]
         redo
     elsif n == primes.length - 1
-        primes.push(next_prime(primes[n]+2))
+        primes.push(next_prime(primes[n]+2,dynum))
     end
+    n += 1
 end
 
 puts "This is your prime set: #{primes.inspect}"
