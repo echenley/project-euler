@@ -18,4 +18,4 @@ def prime_get(upto)
 end
 
 upto = 10001
-puts "These is prime \##{upto}: #{prime_get(upto)}" 
+puts "Prime \##{upto}: #{prime_get(upto)}"
