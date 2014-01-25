@@ -1,0 +1,26 @@
+# Which starting number, under one million, produces the longest Collatz chain?
+
+def collatz(n)
+  length = 1
+  print "#{n}:"
+  while n != 1
+    n.odd? ? (n = 3 * n + 1) : (n = n / 2)
+    length += 1
+    print "#{n},"
+  end
+  puts ""
+  return length
+end
+
+def longest_chain(limit)
+  n = 13
+  longest = [1,0]
+  while n < limit
+    length = collatz(n)
+    longest = [n,length] if length > longest[1]
+    n += 1
+  end
+  longest
+end
+
+p longest_chain(20)
