@@ -1,8 +1,8 @@
 # Work out the first ten digits of the sum of
 # the following one-hundred 50-digit numbers.
 
-def bigsum()
-
+def bigsum(nums)
+  nums.inject(:*).slice(0,10)
 end
 
 big_array = [37107287533902102798797998220837590246510135740250,
