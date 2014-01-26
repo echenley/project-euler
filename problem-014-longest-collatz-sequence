@@ -1,11 +1,15 @@
 # Which starting number, under one million, produces the longest Collatz chain?
 
-def collatz(n)
+def collatz(start)
+  n = start               # start value copied to variable
+  shortcut ||= {}
   length = 1
   while n != 1
+    length + shortcut[n] if shortcut[n]?
     n.odd? ? (n = 3 * n + 1) : (n = n / 2)
     length += 1
   end
+  shortcut[start] = length
   return length
 end
 
