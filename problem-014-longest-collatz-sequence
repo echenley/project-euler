@@ -23,4 +23,4 @@ def longest_chain(limit)
   longest
 end
 
-p longest_chain(20)
+p longest_chain(1000000)
