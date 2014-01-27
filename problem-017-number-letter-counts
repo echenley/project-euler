@@ -1,0 +1,32 @@
+# If all the numbers from 1 to 1000 (one thousand) inclusive
+# were written out in words, how many letters would be used?
+
+
+def count_letters(upto)
+  ones = [0,3,3,5,4,4,3,5,5,4,3,6,6,8,8,7,7,9,8,8]      # letter count for 0-19
+  tens = [0,0,6,6,5,5,5,7,6,6]                      `   # letter count for 0,10,20..90
+  hundreds = ones[0..9].map { |x| x != 0 ? x + 7 : x }  # ones[x] + "hundred".
+  thousands = ones[0..9].map { |x| x != 0 ? x + 8 : x } # ones[x] + "thousand"
+  
+  nums = [ones,tens,hundreds,thousands]
+  total = 0
+  
+  for n in 0..upto
+    (total += ones[n]; next) if n < 20
+    rev_array = n.to_s.split('').map{ |x| x.to_i }.reverse
+    spot = 0
+    if rev_array[1] < 2
+      last_digits = rev_array[0..1].map{ |x| x.to_s }.reverse.join.to_i
+      total += ones[last_digits]
+      spot += 2
+    end
+    while spot < rev_array.length
+      total += nums[spot][rev_array[spot]]
+      total += 3 if spot == 2 && last_digits != 0       # add "and".length
+      spot += 1
+    end
+  end
+  total
+end
+
+p count_letters(1000)
