@@ -1,32 +1,40 @@
 # If all the numbers from 1 to 1000 (one thousand) inclusive
 # were written out in words, how many letters would be used?
 
-
 def count_letters(upto)
   ones = [0,3,3,5,4,4,3,5,5,4,3,6,6,8,8,7,7,9,8,8]      # letter count for 0-19
-  tens = [0,0,6,6,5,5,5,7,6,6]                      `   # letter count for 0,10,20..90
-  hundreds = ones[0..9].map { |x| x != 0 ? x + 7 : x }  # ones[x] + "hundred".
-  thousands = ones[0..9].map { |x| x != 0 ? x + 8 : x } # ones[x] + "thousand"
+  tens = [0,0,6,6,5,5,5,7,6,6]                          # letter count for 0,10,20..90
+  hundreds = ones[0..9].map { |x| x != 0 ? x + 7 : x }  # ones[x] + "hundred".length
+
+  nums = [ones,tens,hundreds]
+  periods = [8,7,7,8]           # "thousand".length.."trillion".length
   
-  nums = [ones,tens,hundreds,thousands]
   total = 0
-  
-  for n in 0..upto
+
+  for n in upto..upto
     (total += ones[n]; next) if n < 20
     rev_array = n.to_s.split('').map{ |x| x.to_i }.reverse
-    spot = 0
-    if rev_array[1] < 2
-      last_digits = rev_array[0..1].map{ |x| x.to_s }.reverse.join.to_i
-      total += ones[last_digits]
-      spot += 2
-    end
-    while spot < rev_array.length
-      total += nums[spot][rev_array[spot]]
-      total += 3 if spot == 2 && last_digits != 0       # add "and".length
-      spot += 1
+    total += periods[-((rev_array.length - 1) / 3)..-1].inject(:+) if rev_array.length > 3  # adds periods
+    p total
+    until rev_array.empty?
+      rev_array.length > 2 ? temp_arr = rev_array.shift(3) : temp_arr = rev_array.shift(rev_array.length)
+      p temp_arr
+      (total += ones[temp_arr[0].to_i]; break) if temp_arr.length == 1
+      (total += temp_arr[0..1].map{ |x| x.to_s }.reverse.join.to_i; break) if temp_arr.length == 2 && temp_arr[1] < 2
+      spot = 0
+      if temp_arr[1] < 2            # if last two digits >= 20
+        last_digits = temp_arr[0..1].map{ |x| x.to_s }.reverse.join.to_i
+        total += ones[last_digits]
+        spot += 2
+      end
+      while spot < temp_arr.length
+        total += nums[spot][temp_arr[spot]]
+        total += 3 if spot == 2 && last_digits != 0       # add "and".length
+        spot += 1
+      end
     end
   end
   total
 end
 
-p count_letters(1000)
+p count_letters(1001210)
