@@ -1,15 +1,15 @@
 # If all the numbers from 1 to 1000 (one thousand) inclusive
 # were written out in words, how many letters would be used?
 
-# Messy, but solves for any number. Pretty badass.
+# Messy, but solves for any number.
 
 def count_letters(upto)
   ones = [0,3,3,5,4,4,3,5,5,4,3,6,6,8,8,7,7,9,8,8]      # letter count for 0-19
-  tens = [0,0,6,6,5,5,5,7,6,6]                          # letter count for 0,10,20..90
+  tens = [0,0,6,6,5,5,5,7,6,6]                          # letter count for 0,10,20 ... 90
   hundreds = ones[0..9].map { |x| x != 0 ? x + 7 : x }  # ones[x] + "hundred".length
 
   nums = [ones,tens,hundreds]
-  periods = [8,7,7,8]           # "thousand".length.."trillion".length
+  periods = [8,7,7,8]           # "thousand".length ... "trillion".length
   
   total = 0
 
