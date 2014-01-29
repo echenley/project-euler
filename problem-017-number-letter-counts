@@ -3,7 +3,7 @@
 
 # Solves for any top number below 1 quadrillion
 
-class Fixnum
+class Integer
     def count_letters
         
         ones = [0,3,3,5,4,4,3,5,5,4]  # 0,1 ... 9
@@ -29,7 +29,7 @@ class Fixnum
                 total += ones[current / 100] + hundred
                 total += ands unless current % 100 == 0
                 current -= (current / 100) * 100
-                (num.push(current.to_s.split('').unshift(0)); redo) if current != 0
+                (num.push(*format('%03d',current).to_s.split('')); redo) if current != 0
             end
             total += periods[current_period]
             current_period += 1
@@ -38,4 +38,4 @@ class Fixnum
     end
 end
 
-p [*1..1101].map{ |i| i.count_letters }.inject(:+)
+p [*1..1000].map{ |i| i.count_letters }.inject(:+)
