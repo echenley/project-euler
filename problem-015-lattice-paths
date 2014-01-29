@@ -1,0 +1,14 @@
+def lattice(total)
+total *= 2
+j = (total - 1)
+n = 2.to_f
+  while j > n
+    total *= (j / n)
+    j -= 1
+    n += 1
+  end
+  total.to_i
+end
+
+side = 20
+p lattice(side)
