@@ -29,7 +29,7 @@ class Fixnum
                 total += ones[current / 100] + hundred
                 total += ands unless current % 100 == 0
                 current -= (current / 100) * 100
-                (num = current.to_s.split(''); redo) if current != 0
+                (num.push(current.to_s.split('').unshift(0)); redo) if current != 0
             end
             total += periods[current_period]
             current_period += 1
