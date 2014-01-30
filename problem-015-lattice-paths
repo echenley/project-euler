@@ -4,17 +4,17 @@
 
 # How many such routes are there through a 20×20 grid?
 
-def lattice(total)
-  total *= 2
-  j = (total - 1)
-  n = 2.to_f
+def lattice(x)
+  total = x * 2
+  n = (total - 1)     # assigns the numerator at total-1
+  d = 2.to_f          # assigns denominator at 2
   while j > n
-    total *= (j / n)
+    total *= (n / d)  # multiplies total by the above until j > n
     j -= 1
     n += 1
   end
-  total.to_i
+  x.to_i
 end
 
-side = 20
-p lattice(side)
+gridsize = 20
+p lattice(gridsize)
