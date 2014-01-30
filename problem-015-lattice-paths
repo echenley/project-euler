@@ -8,12 +8,12 @@ def lattice(x)
   total = x * 2
   n = (total - 1)     # assigns the numerator at total-1
   d = 2.to_f          # assigns denominator at 2
-  while j > n
+  while n > d
     total *= (n / d)  # multiplies total by the above until j > n
-    j -= 1
-    n += 1
+    n -= 1
+    d += 1
   end
-  x.to_i
+  total.to_i
 end
 
 gridsize = 20
