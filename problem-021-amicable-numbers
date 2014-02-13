@@ -23,7 +23,7 @@ end
 
 def amicable(limit)
   amicables = []
-  for num in 200...limit do
+  for num in 2...limit do
     next if amicables.include?(num)
     sum_of_divisors = sum_divisors(num)
     next if num == sum_of_divisors
