@@ -1,0 +1,25 @@
+days_per_month = [31,28,31,30,31,30,31,31,30,31,30,31]  # Jan..Dec
+year = 1900
+month = 0
+day = 0
+weekday = 0  # 1 Jan 1900 was a Monday
+weekday_names = %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]
+total = 0    # total 1st-of-the-Month Sundays
+
+while year < 1901
+  days_per_month[1] = 29 if (year % 4 == 0) && (year % 400 == 0)
+  while month < 12
+    while day <= days_per_month[month]
+      total += 1 if weekday == 1 && day == 0
+      weekday == 6 ? weekday = 0 : weekday += 1
+      day += 1
+    end
+    day = 0
+    month += 1
+  end
+  month = 0
+  year += 1
+end
+puts "#{month+1}/#{day+1}/#{year} was a #{weekday_names[weekday]}"
+
+puts total
