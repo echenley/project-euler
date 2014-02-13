@@ -18,7 +18,7 @@ def sum_divisors(num)
     end
     div += num.odd? ? 2 : 1
   end
-  return divisors.inject(:+)
+  divisors.inject(:+)
 end
 
 def amicable(limit)
