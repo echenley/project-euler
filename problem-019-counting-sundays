@@ -1,25 +1,23 @@
-days_per_month = [31,28,31,30,31,30,31,31,30,31,30,31]  # Jan..Dec
-year = 1900
-month = 0
-day = 0
-weekday = 0  # 1 Jan 1900 was a Monday
-weekday_names = %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]
-total = 0    # total 1st-of-the-Month Sundays
-
-while year < 1901
-  days_per_month[1] = 29 if (year % 4 == 0) && (year % 400 == 0)
-  while month < 12
-    while day <= days_per_month[month]
-      total += 1 if weekday == 1 && day == 0
-      weekday == 6 ? weekday = 0 : weekday += 1
-      day += 1
-    end
-    day = 0
-    month += 1
-  end
+def first_sundays(first,last)
+  days_per_month = [31,28,31,30,31,30,31,31,30,31,30,31]
   month = 0
-  year += 1
+  day = 0
+  weekday = 2         # 1 Jan 1901 was a Tuesday
+  total = 0           # First-of-the-Month Sunday counter
+  for year in first..last
+    days_per_month[1] = (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) ? 29 : 28
+    for month in 0..11
+      for day in 0...days_per_month[month]
+        total += 1 if (weekday == 0 && day == 0)
+        weekday == 6 ? weekday = 0 : weekday += 1
+      end
+    end
+  end
+  total
 end
-puts "#{month+1}/#{day+1}/#{year} was a #{weekday_names[weekday]}"
 
-puts total
+first_year = 1901
+last_year = 2000
+
+puts "First-of-the-Month Sundays from Jan. 1, #{first_year} through Dec. 31, #{last_year}:"
+puts "#{first_sundays(first_year,last_year)}"
