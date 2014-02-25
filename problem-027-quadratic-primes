@@ -21,7 +21,7 @@ max_primes = [0,0,0]
 while a <= limit
   while b <= limit
     n = 0
-    while Prime.prime?((n ** 2) + (a * n) + b) do n += 1 end
+    n += 1 while Prime.prime?((n ** 2) + (a * n) + b)
     if n > max_primes[0]
       max_primes = [n,[a,b],(a*b)]
     end
