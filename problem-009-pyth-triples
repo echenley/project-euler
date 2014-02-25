@@ -13,7 +13,7 @@ def bounce_up(a,b,c,sum,upper,lower)
 end
 
 def bounce_down(a,b,sum,upper,lower)
-    sub = ((b - lower)/2).floor
+    sub = ((b - lower) / 2).floor
     b -= sub
     c = sum - a - b
     done = true if upper - lower <= 2 || b <= lower
