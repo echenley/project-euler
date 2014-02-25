@@ -15,14 +15,9 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 =end
 
 def spiral_sum(side)
-  sum = 1
-  n = 1
-  step = 2
+  sum,n,step = 1,1,2
   ((side - 1) / 2).times do
-    4.times do
-      n += step
-      sum += n
-    end
+    4.times { n += step; sum += n }
     step += 2
   end
   sum
