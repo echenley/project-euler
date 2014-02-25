@@ -1,6 +1,6 @@
 # Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
-def sum_divisors(num)
+def divisors(num)
   divisors,div = [],1
   for div in 1..Math.sqrt(num).floor
     if num % div == 0
