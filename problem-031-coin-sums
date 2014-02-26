@@ -9,6 +9,7 @@ How many different ways can £2 (200p) be made using any number of coins?
 =end 
 
 COINS = [200,100,50,20,10,5,2,1]
+combos = 0
 
 def coin_loop(type,subtotal)          # recursive loop from higher value coins to lower
   sub_combos = 0
@@ -19,8 +20,6 @@ def coin_loop(type,subtotal)          # recursive loop from higher value coins t
   end
   return sub_combos                   # returns accumulated sub_combos
 end
-
-combos = 0
 
 for type in 0..(COINS.length-1)       # picks starting coin
   combos += coin_loop(type,0)
