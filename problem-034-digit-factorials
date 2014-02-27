@@ -1,0 +1,21 @@
+# Find the sum of all numbers which are equal
+# to the sum of the factorial of their digits.
+
+factorials = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880]
+factorial_nums = []
+nums = []
+
+for n in 2..7 do
+  [*0..9].repeated_combination(n).each do |arr|
+    nums << arr.map { |i| factorials[i] }.inject(:+)
+  end
+end
+nums.uniq!.reject! { |x| x < 10 }
+
+nums.each do |num|
+  sum = num.to_s.split('').inject(0) { |sum,x| sum + factorials[x.to_i] }
+  factorial_nums << num if num == sum
+end
+
+p factorial_nums
+p factorial_nums.inject(:+)
