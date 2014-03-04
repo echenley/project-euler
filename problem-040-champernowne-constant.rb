@@ -12,7 +12,7 @@ n = 1
 
 while dec.length < 1_000_001
   dec << n.to_s
-	n += 1
+  n += 1
 end
 
 p [dec[1].to_i,dec[10].to_i,dec[100].to_i,dec[1000].to_i,dec[10000].to_i,dec[100000].to_i,dec[1000000].to_i]
