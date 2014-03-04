@@ -11,7 +11,7 @@ dec = '.'
 n = 1
 
 while dec.length < 1_000_001
-	dec << n.to_s
+  dec << n.to_s
 	n += 1
 end
 
