@@ -13,11 +13,11 @@ require 'prime'
 largest_prime = 0
 
 for n in 2..9
-	permutations = [*1..n].permutation.to_a
-	permutations.each do |p|
-		p = p.join('').to_i
-		largest_prime = p if Prime.prime?(p)
-	end
+  permutations = [*1..n].permutation.to_a
+  permutations.each do |p|
+    p = p.join('').to_i
+    largest_prime = p if Prime.prime?(p)
+  end
 end
 
 p largest_prime
