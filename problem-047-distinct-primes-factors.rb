@@ -2,13 +2,11 @@
 
 require 'prime'
 
-x = 1
-n = 0
+x,n = 1,0
 
-loop do
-  x.prime_division.length == 4 ? n += 1 : n = 0
-  break if n == 4
+while n < 4 do
   x += 1
+  x.prime_division.length == 4 ? n += 1 : n = 0
 end
 
 p x - 3
