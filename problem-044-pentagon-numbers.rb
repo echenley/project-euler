@@ -1,5 +1,3 @@
-require 'set'
-
 pents = [1,5]
 lowest = []
 
@@ -8,8 +6,7 @@ def next_pentagonal(n)
 end
 
 a = 1
-loop do
-  break if lowest.any? # && (pents[a] - pents[a-1]) > lowest[2]
+while lowest.empty? # (pents[a] - pents[a-1]) > lowest[2]
   p a
   for b in (a-1).downto(0)
     sum = pents[a] + pents[b]
