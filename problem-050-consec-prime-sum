@@ -1,0 +1,28 @@
+# Which prime, below one-million, can be written as the sum of the most consecutive primes?
+# https://projecteuler.net/problem=50
+
+require 'prime'
+
+limit = 999_999
+primes = []
+winners = []
+grab_min = 1
+
+Prime.each(limit) do |prime|
+  primes << prime
+end
+
+for i in 0...primes.length do
+  sum = 0
+  for grab in grab_min...(primes.length) do
+    break if primes[i+grab] == nil
+    sum = primes[i,grab].inject(:+)
+    break if sum > limit
+    if Prime.prime?(sum)
+      winners << [sum,grab]
+    end
+  end
+  grab_min = winners[-1][1]
+end
+
+p winners
