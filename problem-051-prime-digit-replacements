@@ -1,0 +1,96 @@
+# Find the smallest prime which, by replacing part of the number (not necessarily adjacent digits) with the same digit, is part of an eight prime value family.
+# http://projecteuler.net/problem=51
+
+# not pretty...or quick...but it does work
+# will add comments later
+
+require 'prime'
+
+def prime_digit_replacements(digits,prime_target)
+  
+  last_digits = [1,3,7,9]
+  winner = false
+  number_maps = ['dynamic','static'].repeated_permutation(digits).to_a
+  # get rid permutations where last digit is dynamic or if there aren't any dynamic digits
+  number_maps.delete_if { |arr| arr[-1] == 'dynamic' || arr.count('dynamic') == 0 }
+  
+  number_maps.each do |number_map|
+    
+    statics = Hash[(0...number_map.length).zip(number_map.reverse)]
+    statics.delete_if { |key,value| value == 'dynamic' || key == 0 }
+  
+    static_nums = [*0..9].repeated_permutation(statics.length).to_a
+    static_nums.delete_if do |arr|
+      (arr.last == 0 && number_map.first == 'static') || arr.first == 0
+    end
+    
+    add_this = number_map.reverse.each_with_index.inject(0) do |sum,(value,index)|
+      value == 'dynamic' ? sum + 10 ** index : sum
+    end
+    
+    last_digits.each do |last_digit|
+
+      if statics.empty?
+        
+        prime_nums = []
+        current_num = last_digit + add_this
+        
+        8.times do
+          
+          if Prime.prime?(current_num)
+            prime_nums << current_num
+          end
+            
+          if prime_nums.length == prime_target
+            p prime_nums.first
+            winner = [prime_nums.first, current_num, number_map, static_arr, add_this] if winner.empty? || prime_nums.first < winner[0]
+          end
+          
+          current_num += add_this
+          
+        end
+      else
+        
+        static_nums.each do |static_arr|
+        
+          prime_nums = []
+          initial = 0
+          add_again = 10
+          
+          if number_map[0] == 'dynamic'
+            initial = add_this
+            add_again = 9
+          end
+          
+          current_num = initial + statics.each_with_index.inject(last_digit) do |sum,((key,value),index)|
+            sum + static_arr[-index] * (10 ** key)
+          end
+          
+          add_again.times do
+            
+            if Prime.prime?(current_num)
+              prime_nums << current_num
+            end
+                        
+            if prime_nums.length == prime_target
+              winner = [prime_nums.first, current_num, number_map, static_arr, add_this] if !winner || prime_nums.first < winner[0]
+            end
+            
+            current_num += add_this
+          end
+        end
+      end
+    end
+  end
+  winner ? winner : false
+end
+
+n = 2
+results = false
+
+while !results
+  results = prime_digit_replacements(n,8)
+  n += 1
+end
+
+p results
