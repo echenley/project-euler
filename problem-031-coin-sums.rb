@@ -13,12 +13,13 @@ combos = 0
 
 def add_coin(type,subtotal)           # recursive loop from higher value coins to lower
   sub_combos = 0
+  target = COINS[0]
   subtotal += COINS[type]             # adds current coin to subtotal
-  return 1 if subtotal == COINS[0]    # returns 1 to combos if 200 is reached
+  return 1 if subtotal == target      # returns 1 to combos if 200 is reached
   for x in type...COINS.length        # otherwise adds another coin, and so on...
-    sub_combos += add_coin(x,subtotal) if subtotal + COINS[x] <= COINS[0]
+    sub_combos += add_coin(x,subtotal) if subtotal + COINS[x] <= target
   end
-  return sub_combos                   # returns accumulated sub_combos
+  sub_combos                          # returns accumulated sub_combos
 end
 
 for type in 0...COINS.length          # picks starting coin
