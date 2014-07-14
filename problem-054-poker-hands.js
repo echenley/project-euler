@@ -580,52 +580,61 @@ function objectify(hand) {
 	return handObject;
 }
 
+function tiebreaker(player1,player2) {
+	
+	if (player1.worth === 80)
+	
+	// return 1 or 0 depending on who wins
+}
+
 function calcValue(hand) {
 
-	hand = objectify(hand);
-
-
-	// TRY RETURNING ARRAY, SOMETHING LIKE:
-	// [handType,highCard1,highCard2, etc...]
-	// where all information is there
-
+	var value = 0;
 
 	if (hand.suits.allValuesSame() && hand.values.isStraight()) {
 		// straight flush
-		return 80 + hand.values.max()/10;
+		value = 80;
 	} else if (isFourOfAKind(hand)) {
 		// four of a kind
-		return 70 + hand.values.max()/10;
+		value = 70;
 	} else if (isFullHouse(hand)) {
 		// full house
-		return 60 + hand.values.max()/10;
+		value = 60;
 	} else if (isFlush(hand)) {
 		// flush
-
+		value = 50;
 	} else if (isStraight(hand)) {
 		// straight
-
+		value = 40;
 	} else if (isThreeOfAKind(hand)) {
 		// three of a kind
-
+		value = 30;
 	} else if (isTwoPair(hand)) {
 		// two pair
-
+		value = 20;
 	} else if (isPair(hand)) {
 		// single pair
-
+		value = 10;
 	} else {
 		// high card
-		return hand.values.max()/10;
+		value = hand.values.max()/10;
 	}
 
+	return value;
 }
 
 for (var i = 0; i < hands.length; i++) {
-	var hand = hands[i],
-		player1 = calcValue(hand.splice(0,5)),
-		player2 = calcValue(hand);
-	wins += player1 > player2 ? 1 : 0;
+	var player1 = objectify(hands[i].splice(0,5)),
+		player2 = objectify(hands[i]);
+		
+	player1.worth = calcValue(player1);
+	player2.worth = calcValue(player2);
+	
+	if (player1.worth === player2.worth) {
+		wins += tiebreaker(player1,player2);
+	} else {
+		wins += player1 > player2 ? 1 : 0;
+	}
 }
 
 console.log(wins);
