@@ -1,3 +1,5 @@
+'use strict';
+
 var hands = [["8C","TS","KC","9H","4S","7D","2S","5D","3S","AC"],
 ["5C","AD","5D","AC","9C","7C","5H","8D","TD","KS"],["3H","7H","6S","KC","JS","QH","TD","JC","2D","8S"],
 ["TH","8H","5C","QS","TC","9H","4D","JC","KS","JS"],["7C","5H","KC","QH","JD","AS","KH","4C","AD","4S"],
@@ -500,13 +502,22 @@ var hands = [["8C","TS","KC","9H","4S","7D","2S","5D","3S","AC"],
 ["9C","JD","7C","6D","TC","6H","6C","JC","3D","3S"],["QC","KC","3S","JC","KD","2C","8D","AH","QS","TS"],
 ["AS","KD","3D","JD","8H","7C","8C","5C","QD","6C"]];
 
-var faceCardValues = {
+var cardValue = {
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    'T': 10,
 	'J': 11,
 	'Q': 12,
 	'K': 13,
 	'A': 14
 };
-var wins = 0;
+var p1wins = 0;
 
 
 Array.prototype.max = function() {
@@ -517,124 +528,210 @@ Array.prototype.min = function() {
 	return Math.min.apply(null, this);
 };
 
+Array.prototype.unique = function() {
+    return this.reduce(function(p, c) {
+        if (p.indexOf(c) < 0) p.push(c);
+        return p;
+    }, []);
+};
+
+Array.prototype.filterOut = function(v) {
+    // v can be single value or array
+    v = (v instanceof Array) ? v : [v];
+    return this.filter(function(a) {
+        return v.indexOf(a) === -1;
+    });
+};
+
+Array.prototype.getDuplicates = function() {
+    // returns all values with more than 1 instance
+    return this.filter(function(v) {
+        return this.indexOf(v) !== this.lastIndexOf(v);
+    }.bind(this)).unique();
+};
+
+function isNumOfAKind(hand, n) {
+    var unique = hand.values.unique();
+
+    function count(v) {
+        return hand.values.filter(function(value) {
+            return value === v;
+        }).length;
+    }
+
+    for (let i = unique.length - 1; i >= 0; i--) {
+        if (count(unique[i]) === n) {
+            hand['has' + n + 'of'] = unique[i];
+            return true;
+        }
+    }
+    return false;
+}
 
 function isFourOfAKind(hand) {
-	
+    return isNumOfAKind(hand, 4);
 }
 
 function isFullHouse(hand) {
-
+    return isThreeOfAKind(hand) && isPair(hand);
 }
 
 function isFlush(hand) {
-	for (var i = 1; i < hand.suits.length; i++) {
-		if(hand.suits[i] !== hand.suits[0]) return false;
-	}
-	return true;
+	var suit = hand.suits[0];
+	return hand.suits.every(function(s) {
+        return s === suit;
+    });
 }
 
 function isStraight(hand) {
 	var values = hand.values.sort();
-	for (var i = 1; i < values.length; i++) {
+	for (let i = values.length-1; i > 0; i--) {
 		if (values[i] !== values[0] + i) return false;
 	}
 	return true;
 }
 
 function isThreeOfAKind(hand) {
-
+    return isNumOfAKind(hand, 3);
 }
 
 function isTwoPair(hand) {
-
+    // this works because 3 of a kind is already checked for
+    return hand.values.unique().length === 3;
 }
 
 function isPair(hand) {
-
-}
-
-
-function getFaceValue(card) {
-
-	// returns value of 2-14
-	return typeof card === 'number' ? parseInt(card) : faceCardValues[card];
-
+    return isNumOfAKind(hand, 2);
 }
 
 function objectify(hand) {
-
 	var handObject = {
 		'values': [],
-		'suits': []
+		'suits': [],
+        'type': 0
 	};
 
 	// generate object with properties 'values' and 'suits' (both arrays)
-	for (var i = 0; i < hand.length; i++) {
-		var card = hand[i],
-			cardData = card.split('');
+	for (let i = 0; i < hand.length; i++) {
+		var card = hand[i];
 
-		handObject.values[i] = getFaceValue(cardData[0]);
-		handObject.suits[i] = cardData[1];
+		handObject.values[i] = cardValue[card[0]];
+		handObject.suits[i] = card[1];
 	}
 
 	return handObject;
 }
 
-function tiebreaker(player1,player2) {
-	
-	if (player1.worth === 80)
-	
-	// return 1 or 0 depending on who wins
-}
+function assignType(hand) {
 
-function calcValue(hand) {
-
-	var value = 0;
-
-	if (hand.suits.allValuesSame() && hand.values.isStraight()) {
+	if (isFlush(hand) && isStraight(hand)) {
 		// straight flush
-		value = 80;
-	} else if (isFourOfAKind(hand)) {
+		hand.type = 90;
+    } else if (isFourOfAKind(hand)) {
 		// four of a kind
-		value = 70;
-	} else if (isFullHouse(hand)) {
+		hand.type = 80;
+    } else if (isFullHouse(hand)) {
 		// full house
-		value = 60;
-	} else if (isFlush(hand)) {
+		hand.type = 70;
+    } else if (isFlush(hand)) {
 		// flush
-		value = 50;
-	} else if (isStraight(hand)) {
+		hand.type = 60;
+    } else if (isStraight(hand)) {
 		// straight
-		value = 40;
-	} else if (isThreeOfAKind(hand)) {
+		hand.type = 50;
+    } else if (isThreeOfAKind(hand)) {
 		// three of a kind
-		value = 30;
-	} else if (isTwoPair(hand)) {
+		hand.type = 40;
+    } else if (isTwoPair(hand)) {
 		// two pair
-		value = 20;
-	} else if (isPair(hand)) {
+        hand.pairs = hand.values.getDuplicates();
+		hand.type = 30;
+    } else if (isPair(hand)) {
 		// single pair
-		value = 10;
-	} else {
+		hand.type = 20;
+    } else {
 		// high card
-		value = hand.values.max()/10;
+		hand.type = hand.values.max();
 	}
 
-	return value;
+	return hand;
 }
 
-for (var i = 0; i < hands.length; i++) {
+function compareValue(v1, v2) {
+    // compare two values
+    if (v1 === v2) { return 0; }
+    return v1 > v2 ? 1 : 2;
+}
+
+function compareAll(values1, values2) {
+    // compares two arrays of values from highest to lowest
+    function sortReverse(a, b) { return b - a; }
+
+    values1 = values1.sort(sortReverse);
+    values2 = values2.sort(sortReverse);
+
+    return values1.reduce(function(acc, curr, i) {
+        if (acc !== 0) { return acc; }
+        return compareValue(curr, values2[i]);
+    }, 0);
+}
+
+function tiebreak(p1, p2) {
+    var type = p1.type;
+
+    if (type === 90 || type === 50) {
+        // straight or straight flush
+        return compareValue(p1.values.max(), p1.values.max());
+    }
+    else if (type === 80) {
+        // four of a kind
+        return compareValue(p1.has4of, p2.has4of) ||
+            compareValue(p1.values.filterOut(p1.has4of)[0], p2.values.filterOut(p1.has4of)[0]);
+    }
+    else if (type === 70) {
+        // full house
+        return compareValue(p1.has3of, p2.has3of) ||
+            compareValue(p1.has2of, p2.has2of);
+    }
+    else if (type === 40) {
+        // three of a kind
+        return compareValue(p1.has3of, p2.has3of) ||
+            compareValue(p1.values.filterOut(p1.has3of)[0], p2.values.filterOut(p1.has3of)[0]);
+    }
+    else if (type === 30) {
+        // two pair
+        return compareAll(p1.pairs, p2.pairs) ||
+            compareAll(p1.values.filterOut(p1.pairs), p2.values.filterOut(p2.pairs));
+    }
+    else if (type === 20) {
+        // single pair
+        return compareValue(p1.has2of, p2.has2of) ||
+            compareAll(p1.values.filterOut(p1.has2of), p2.values.filterOut(p1.has2of));
+    }
+    else {
+        // high card or flush
+        return compareAll(p1.values, p2.values);
+    }
+}
+
+for (let i = 0; i < hands.length; i++) {
 	var player1 = objectify(hands[i].splice(0,5)),
 		player2 = objectify(hands[i]);
-		
-	player1.worth = calcValue(player1);
-	player2.worth = calcValue(player2);
+
+    // {
+    //     values: [2, 3, ...],
+    //     suits:  ['S', 'C', ...]
+    // }
+
+	player1 = assignType(player1);
+	player2 = assignType(player2);
 	
-	if (player1.worth === player2.worth) {
-		wins += tiebreaker(player1,player2);
+	if (player1.type === player2.type) {
+        let tiebreakWinner = tiebreak(player1, player2) === 1;
+		p1wins += tiebreakWinner ? 1 : 0;
 	} else {
-		wins += player1 > player2 ? 1 : 0;
+		p1wins += player1.type > player2.type ? 1 : 0;
 	}
 }
 
-console.log(wins);
+console.log('Player1 won', p1wins, 'times');
